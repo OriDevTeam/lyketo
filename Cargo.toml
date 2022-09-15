@@ -1,0 +1,13 @@
+[workspace]
+resolver = "2"
+members = [
+    "base",
+    "lyketo",
+    "eter",
+    "maps",
+    "sfx",
+    "vfx",
+]
+
+[profile.dev]
+opt-level = 2

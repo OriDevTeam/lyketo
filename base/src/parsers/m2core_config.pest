@@ -1,0 +1,4 @@
+// Metin2 Server Core Configuration "CONFIG" Format Grammar
+// Default naming: CONFIG
+m2gc_config = { "Hello World!" }
+

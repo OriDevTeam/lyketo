@@ -1,0 +1,7 @@
+# Rust
+/target
+
+
+# Temp files
+/eter/tests/data
+/vfx/tests/data

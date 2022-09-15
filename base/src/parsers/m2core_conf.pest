@@ -1,0 +1,26 @@
+// Metin2 Server Core Configuration "Conf" Format Grammar
+// Default naming: conf.txt
+conf = { SOI ~ ALLSPACE ~pair* ~ ALLSPACE ~ EOI }
+
+
+// Containers
+// TODO: Check if this grammar can support "CONFIG" semantics sanely simultaneously
+// pair = { key ~ ANYSPACE ~ ("=" | ":") ~ value ~ ANYSPACE ~ NEWLINE* }
+pair = { key ~ ANYSPACE ~ "=" ~ value ~ ANYSPACE ~ NEWLINE* }
+
+
+
+// Key Values
+key = @{ (ASCII_ALPHANUMERIC | "_")+ }
+value = @{ (free | contained)? }
+free = { (range | number) }
+contained = { "\"" ~ (string)? ~ "\"" }
+number = ${ ASCII_DIGIT+ }
+string = ${ (ASCII_ALPHANUMERIC | WHITESPACE | ".")* }
+// address = _{ (ASCII_DIGIT | ".") }
+// list = ${ ((ASCII_ALPHANUMERIC | ASCII_DIGIT)+ ~ WHITESPACE)* }
+range = ${ (number | WHITESPACE)+ }
+
+WHITESPACE = _{ " " | "\t" }
+ANYSPACE = _{ WHITESPACE* }
+ALLSPACE = _{ (WHITESPACE | NEWLINE)* }

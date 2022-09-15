@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="CPP_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/eter/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/eter/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/lyketo/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/maps/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/maps/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/maps/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/sfx/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/vfx/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/vfx/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/lyketo/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/base/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/base/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/eter/tests/data/type1" />
+      <excludeFolder url="file://$MODULE_DIR$/eter/tests/data/type3" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

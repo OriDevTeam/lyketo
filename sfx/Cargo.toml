@@ -1,0 +1,10 @@
+[package]
+name = "lyketo-sfx"
+description = ""
+license = "MIT"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+lyketo = {path = "../lyketo", version = "0.1.0"}

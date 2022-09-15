@@ -1,0 +1,139 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'libjigen-rust'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=libjigen-rust"
+                ],
+                "filter": {
+                    "name": "libjigen-rust",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'map'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=map",
+                    "--package=libjigen-rust"
+                ],
+                "filter": {
+                    "name": "map",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'map'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=map",
+                    "--package=libjigen-rust"
+                ],
+                "filter": {
+                    "name": "map",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug example 'models'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--example=models",
+                    "--package=libjigen-rust"
+                ],
+                "filter": {
+                    "name": "models",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in example 'models'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--example=models",
+                    "--package=libjigen-rust"
+                ],
+                "filter": {
+                    "name": "models",
+                    "kind": "example"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'effect'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=effect",
+                    "--package=libjigen-rust"
+                ],
+                "filter": {
+                    "name": "effect",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug integration test 'map'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--test=map",
+                    "--package=libjigen-rust"
+                ],
+                "filter": {
+                    "name": "map",
+                    "kind": "test"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

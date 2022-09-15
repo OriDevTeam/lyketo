@@ -1,0 +1,10 @@
+{
+  "MapType": "Outdoor",
+  "CellScale": 200,
+  "HeightScale": 0.5,
+  "ViewRadius": 128,
+  "MapSize": [2, 2],
+  "BasePosition": [0, 0],
+  "TextureSet": "textureset/test_map.txt",
+  "Environment": "test_map.msenv"
+}

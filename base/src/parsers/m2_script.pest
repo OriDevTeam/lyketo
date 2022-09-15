@@ -1,0 +1,42 @@
+// Metin2 Script Format Grammar
+// Usual naming: file.ms
+// (after the extension ".ms" a letter fo the subsets comes in
+// for example ".msm", ".msa")
+script = _{ SOI ~ containers ~ EOI }
+
+
+// Containers
+pair = { ANYSPACE ~ key ~ ANYSPACE ~ value ~ ALLSPACE }
+
+object = {
+    ANYSPACE ~ key ~ ANYSPACE ~ "{" ~ ALLSPACE ~ (group | pair)* ~ ALLSPACE ~ "}" ~ ALLSPACE
+}
+
+group = { "Group" ~ object }
+// list = { "List" ~ object }
+
+containers = { (pair | group)* }
+
+// Key Value types
+key = @{ ASCII_ALPHANUMERIC+ }
+value = _{ string | number }
+
+string = ${ "\"" ~ inner ~ "\"" }
+inner = @{ char* }
+char = {
+    !("\"" | "\\") ~ ANY
+    | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
+    | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
+}
+
+number = @{
+    "-"?
+    ~ ("0" | ASCII_NONZERO_DIGIT ~ ASCII_DIGIT*)
+    ~ ("." ~ ASCII_DIGIT*)?
+    ~ (^"e" ~ ("+" | "-")? ~ ASCII_DIGIT+)?
+}
+
+WHITESPACE = _{ " " | "\t" | "\r" }
+ANYSPACE = _{ WHITESPACE* }
+ALLSPACE = _{ (WHITESPACE | NEWLINE)* }
+

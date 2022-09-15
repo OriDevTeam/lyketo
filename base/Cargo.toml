@@ -1,0 +1,11 @@
+[package]
+name = "lyketo-base"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+anyhow = "1.0.65"
+pest = "2.3.1"
+pest_derive = "2.3.1"
+serde = "1.0.144"
