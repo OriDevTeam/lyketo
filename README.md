@@ -20,11 +20,11 @@
 
 ## Crates
 
-| Name        | Status | Crates.io                                             | Documentation                                         | Build |
-|-------------|--------|-------------------------------------------------------|-------------------------------------------------------|-------|
-| lyketo-eter | ?      | [![eter-crate][lyketo:eter-badge]][lyketo:eter-crate] | [![eter-crate][lyketo:eter-docs]][lyketo:eter-docs]   | ?     |
-| lyketo-maps | ?      | [![eter-crate][lyketo:maps-badge]][lyketo:maps-crate] | [![eter-crate][lyketo:maps-badge]][lyketo:maps-crate] | ?     |
-| lyketo-vfx  | ?      | [![eter-crate][lyketo:vfx-badge]][lyketo:vfx-crate]   | [![eter-crate][lyketo:vfx-badge]][lyketo:vfx-crate]   | ?     |
-| lyketo-sfx  | ?      | [![eter-crate][lyketo:sfx-badge]][lyketo:sfx-crate]   | [![eter-crate][lyketo:sfx-badge]][lyketo:sfx-crate]   | ?     |
+| Name        | Status | Crates.io                                             | Documentation                                       | Build |
+|-------------|--------|-------------------------------------------------------|-----------------------------------------------------|-------|
+| lyketo-eter | ?      | [![eter-crate][lyketo:eter-badge]][lyketo:eter-crate] | [![eter-crate][lyketo:eter-docs]][lyketo:eter-docs] | ?     |
+| lyketo-maps | ?      | [![eter-crate][lyketo:maps-badge]][lyketo:maps-crate] | [![eter-crate][lyketo:maps-docs]][lyketo:maps-docs] | ?     |
+| lyketo-vfx  | ?      | [![eter-crate][lyketo:vfx-badge]][lyketo:vfx-crate]   | [![eter-crate][lyketo:vfx-docs]][lyketo:vfx-docs]   | ?     |
+| lyketo-sfx  | ?      | [![eter-crate][lyketo:sfx-badge]][lyketo:sfx-crate]   | [![eter-crate][lyketo:sfx-docs]][lyketo:sfx-docs]   | ?     |
 
 
