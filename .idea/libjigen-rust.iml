@@ -14,6 +14,7 @@
       <sourceFolder url="file://$MODULE_DIR$/lyketo/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/base/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/base/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/gui/src-tauri/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/eter/tests/data/type1" />
       <excludeFolder url="file://$MODULE_DIR$/eter/tests/data/type3" />

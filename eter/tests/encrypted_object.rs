@@ -1,6 +1,6 @@
 // Relative Modules
 // mod type_1;
-// mod type_2;
+mod type_2;
 // mod panama;
 
 
