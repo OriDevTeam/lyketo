@@ -1,11 +1,13 @@
+// Relative Modules
+mod bgm;
+
 // Standard Uses
-use std::fs::File;
-use std::io::{Read};
 
 // Crate Uses
 
 // External Uses
-use lyketo_eter::formats::types::{Type2};
+use lyketo_eter::formats::encrypted_object::types::Type2;
+use lyketo_eter::formats::encrypted_object::ETER_INDEX_KEY;
 
 
 const RAW_DATA: &[u8; 33] = b"Hello, this is an message object!";
@@ -24,7 +26,11 @@ const EXPECTED_SERIALIZED_DATA: [u8; 56] = [
 
 #[test]
 pub fn create_serialize_object() {
-    let serialized = Type2::serialize(RAW_DATA.to_vec()).unwrap();
+    println!("\nCreating and serializing a hello message:");
+
+    let packer = Type2::with_key(ETER_INDEX_KEY.clone());
+
+    let serialized = packer.serialize(RAW_DATA.to_vec()).unwrap();
 
     assert_eq!(serialized, EXPECTED_SERIALIZED_DATA);
 }
@@ -32,22 +38,12 @@ pub fn create_serialize_object() {
 
 #[test]
 pub fn create_deserialize_object() {
-    let deserialized = Type2::deserialize(EXPECTED_SERIALIZED_DATA.to_vec()).unwrap();
+    println!("\nDeserializing a hello message:");
+
+    let packer = Type2::with_key(ETER_INDEX_KEY.clone());
+
+    let deserialized = packer.deserialize(EXPECTED_SERIALIZED_DATA.to_vec()).unwrap();
 
     assert_eq!(deserialized, RAW_DATA);
 }
 
-
-
-#[test]
-pub fn load_to_delete_eix() {
-    let mut buffer = vec![];
-    let _ = File::open("tests/data/to_delete.eix")
-        .expect("{}")
-        .read_to_end(&mut buffer)
-        .expect("{}");
-
-    let eix_raw_data = Type2::deserialize(buffer).unwrap();
-
-    assert_eq!(eix_raw_data, vec![]);
-}

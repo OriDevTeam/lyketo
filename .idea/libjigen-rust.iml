@@ -15,10 +15,13 @@
       <sourceFolder url="file://$MODULE_DIR$/base/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/base/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/gui/src-tauri/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/etervfs/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/etervfs/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
-      <excludeFolder url="file://$MODULE_DIR$/eter/tests/data/type1" />
-      <excludeFolder url="file://$MODULE_DIR$/eter/tests/data/type3" />
       <excludeFolder url="file://$MODULE_DIR$/vfx/tests/data" />
+      <excludeFolder url="file://$MODULE_DIR$/eter/tests/data/encrypted_object/type1" />
+      <excludeFolder url="file://$MODULE_DIR$/eter/tests/data/encrypted_object/type3" />
+      <excludeFolder url="file://$MODULE_DIR$/eter/tests/data" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -1,18 +1,21 @@
 // Relative Modules
-// mod type_1;
+mod type_1;
 mod type_2;
-// mod panama;
+mod panama;
 
 
 // Standard Uses
-// use std::fs::File;
-// use std::io::{Read, Write};
+use std::fs;
+use std::path::Path;
 
 // Crate Uses
 
 // External Uses
-// use lyketo_eter::formats::encrypted_object::EncryptedObject;
+use lyketo_eter::formats::encrypted_object::types::TypeRaw;
+use lyketo_eter::utils::key::Key;
 
+
+const MOCK_ENCRYPTED_OBJECT: &str = "eter/tests/data/mock_encrypted_object.epk";
 
 
 #[test]
@@ -32,17 +35,13 @@ fn create_encrypted_object() {
 
 #[test]
 fn load_encrypted_object() {
-    /*
-    let mut buffer = vec![];
-    let _ = File::open("eter/tests/data/mock_encrypted_object.epk")
-        .expect("{}")
-        .read_to_end(&mut buffer)
-        .expect("{}");
+    let path = Path::new(MOCK_ENCRYPTED_OBJECT);
+    let file = fs::read(path).unwrap();
 
-    let encrypted_object = EncryptedObject::from_bytes(buffer);
+    let packer = TypeRaw::with_key(Key::default());
 
-    encrypted_object.expect_err("{}")
-    */
+    let encrypted_object = packer.deserialize(file).unwrap();
 
+    dbg!(encrypted_object);
 }
 

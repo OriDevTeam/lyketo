@@ -1,25 +1,26 @@
 // Standard Uses
 
 // Crate Uses
-use crate::cryptography::compressors::Compressor;
+use crate::cryptography::compressors::{Compressor, MAGIC_MCOZ};
 
 
 // External Uses
-// use snap;
+use anyhow::Result;
 
 
 #[derive(Default)]
 pub struct Snappy {}
 
-impl Compressor for Snappy {
-    // type Error = Snappy::Error;
-    const FOURCC: &'static str = "MCPZ";
 
-    fn compress(_data: &Vec<u8>) -> Result<Vec<u8>, ()> {
+#[allow(unused)]
+impl Compressor for Snappy {
+    const FOURCC: u32 = MAGIC_MCOZ;
+
+    fn compress(data: &Vec<u8>) -> Result<Vec<u8>> {
         todo!()
     }
 
-    fn decompress(_data: &Vec<u8>, _expected_size: usize) -> Result<Vec<u8>, ()> {
+    fn decompress(data: &Vec<u8>, expected_size: usize) -> Result<Vec<u8>> {
         todo!()
     }
 }

@@ -1,4 +1,9 @@
 // Relative Modules
+pub mod header;
+pub mod types;
+
+// Relative Modules
+use std::mem;
 use std::marker::PhantomData;
 
 // Standard Uses
@@ -6,67 +11,118 @@ use std::marker::PhantomData;
 // Crate Uses
 use crate::cryptography::compressors::Compressor;
 use crate::cryptography::ciphers::Cipher;
+use crate::formats::encrypted_object::header::Header;
+use crate::utils::four_cc;
+use crate::utils::key::Key;
 
 // External Uses
+use bytemuck;
+use anyhow::{Result, bail};
+use lazy_static::lazy_static;
 
+
+lazy_static!(
+    pub static ref ETER_INDEX_KEY: Key = Key::from_decimals_u32(
+        vec![45129401, 92367215, 681285731, 1710201]
+    );
+
+    pub static ref ETER_DATA_KEY: Key = Key::from_decimals_u32(
+        vec![78952482, 527348324, 1632942, 486274726]
+    );
+);
 
 
 pub struct EncryptedObject<Compression, Cipher> {
     compression: PhantomData<Compression>,
     cipher: PhantomData<Cipher>,
+
+    cipher_key: Option<Key>
 }
 
 
 impl<Compression: Compressor, Ciphering: Cipher> EncryptedObject<Compression, Ciphering> {
+    pub fn with_key(cipher_key: Key) -> Self {
+        Self {
+            compression: Default::default(),
+            cipher: Default::default(),
+            cipher_key: Some(cipher_key)
+        }
+    }
 
-    pub fn deserialize(data: Vec<u8>) -> Result<Vec<u8>, ()> {
-        if data.len() < 20 {
-            panic!("Not enough data for the header, expected at least 20 bytes, got {}",
-                   &data.len())
+    pub fn deserialize(&self, data: Vec<u8>) -> Result<Vec<u8>> {
+        if data.len() < mem::size_of::<Header>() {
+            bail!("Expected at least {} bytes, got {} instead",
+                mem::size_of::<Header>(), &data.len()
+            )
         }
 
-        println!("Encrypted Object size: {}", data.len());
+        println!("Encrypted Object size: {} bytes", data.len());
 
-        let compression_magic = &data[0..4];
-        let ciphered_size = u32::from_le_bytes(data[4..8].try_into().unwrap());
-        let compressed_size = u32::from_le_bytes(data[8..12].try_into().unwrap());
-        let raw_size = u32::from_le_bytes(data[12..16].try_into().unwrap());
-        let cipher_magic = &data[16..20];
-        let object = &data[16..].to_vec();
+        let header = Header::from_bytes(data[..mem::size_of::<Header>()].to_vec())?;
+        let object_data = &data[mem::size_of::<Header>()..].to_vec();
 
-        Self::print_information(&compression_magic, &cipher_magic,
-                                &object.len(), &ciphered_size,
-                                &compressed_size, &raw_size);
+        header.print_information(object_data);
 
-        let compression_magic_name = String::from_utf8(Vec::from(compression_magic))
-            .unwrap();
-
-        if compression_magic_name != Compression::FOURCC {
-            println!("Compression FourCC is not {}", Compression::FOURCC);
-            return Err(())
+        if header.compression_magic != Compression::FOURCC {
+            bail!("Compression FourCC is not {}", Compression::FOURCC);
         }
 
-        println!("Processed Object ({} bytes): {:?}", &object.len(), &object);
+        println!("Processed Object Data ({} bytes, first 10 bytes): {:?}",
+                 &object_data.len(), &object_data[..10]
+        );
 
-        let mut deciphered_data = Ciphering::decrypt(&object).unwrap();
-        println!("Deciphered ({} bytes): {:?}", deciphered_data.len(), deciphered_data);
+        let mut pre_compressed_data = if header.ciphered_size > 0 {
 
-        if deciphered_data.len() != ciphered_size as usize {
-            println!("Deciphered size is {}, should be {}", deciphered_data.len(), ciphered_size);
-            return Err(())
-        }
+            let deciphered_data = Ciphering::decrypt(
+                &object_data, self.cipher_key.as_ref().unwrap().to_vec_u8()
+            )?;
 
-        deciphered_data.truncate(compressed_size as usize);
+            println!("Deciphered ({} bytes, first 10 bytes): {:?}",
+                     deciphered_data.len(), &deciphered_data[..10]
+            );
+
+            let four_cc_bytes: [u8; 4] = *bytemuck::from_bytes(&deciphered_data[..4]);
+            let deciphered_four_cc = four_cc::from_bytes(four_cc_bytes);
+
+            if deciphered_four_cc != Compression::FOURCC {
+                bail!("Expected deciphered data FourCC to be {}, got {} instead",
+                    four_cc::to_string(&Compression::FOURCC),
+                    four_cc::to_string(&deciphered_four_cc),
+                );
+            }
+
+            // let size = Size;
+            if deciphered_data.len() != header.ciphered_size as usize {
+                bail!("Deciphered size is {}, should be {}",
+                    deciphered_data.len(), header.ciphered_size
+                );
+            }
+
+            // TODO: Check if the deciphered data is valid by checking the first
+            //       4 bytes which is a FourCC, the decompress it
+            //       (the FourCC is included in the compressed data, compressed length should match it)
+
+            // TODO: Truncation should not be done, if there is extra bytes it most probably is a mistake
+            // deciphered_data.truncate(header.compressed_size as usize);
+
+            deciphered_data
+        } else {
+            data
+        };
+
+        pre_compressed_data.drain(..4);
+        pre_compressed_data.resize(header.compressed_size as usize, 0);
 
         let decompressed_data = Compression::decompress(
-            &deciphered_data, compressed_size as usize
+            &pre_compressed_data, header.raw_size as usize
         ).unwrap();
 
         println!("Decompressed ({} bytes): {:?}", decompressed_data.len(), decompressed_data);
 
-        if decompressed_data.len() != raw_size as usize {
-            println!("Decompressed size is {}, should be {}", decompressed_data.len(), compressed_size);
-            return Err(())
+        if decompressed_data.len() != header.raw_size as usize {
+            bail!("Decompressed size is {}, should be {}",
+                decompressed_data.len(), header.compressed_size
+            );
         }
 
         Ok(decompressed_data)
@@ -77,7 +133,7 @@ impl<Compression: Compressor, Ciphering: Cipher> EncryptedObject<Compression, Ci
 
 impl<Compression: Compressor, Ciphering: Cipher> EncryptedObject<Compression, Ciphering> {
 
-    pub fn serialize(data: Vec<u8>) -> Result<Vec<u8>, ()> {
+    pub fn serialize(&self, data: Vec<u8>) -> Result<Vec<u8>> {
 
         println!("Raw object size: {}", data.len());
         println!("{:?}", &data);
@@ -107,50 +163,31 @@ impl<Compression: Compressor, Ciphering: Cipher> EncryptedObject<Compression, Ci
             println!("{:?}", compressed_data);
         }
 
-        let ciphered_data = Ciphering::encrypt(&compressed_data).unwrap();
+        let ciphered_data = Ciphering::encrypt(
+            &compressed_data, self.cipher_key.as_ref().unwrap().to_vec_u8()
+        ).unwrap();
 
         println!("Ciphered from {} to {} bytes", compressed_data.len(),
                  ciphered_data.len());
         println!("{:?}", &ciphered_data);
 
-        println!("Processed Object Size: {:?}", compressed_data.len());
+        println!("Processed Object Data Size: {:?}", compressed_data.len());
 
         // Create the header with all the necessary information
+        // and push it, then the ciphered object after
         let mut object: Vec<u8> = vec!();
-        object.extend(Compression::FOURCC.as_bytes());
-        object.extend((ciphered_data.len() as u32).to_le_bytes());
-        object.extend((compressed_data_pre_padding as u32).to_le_bytes());
-        object.extend((data.len() as u32).to_le_bytes());
+
+        let header = Header {
+            compression_magic: Compression::FOURCC,
+            ciphered_size: ciphered_data.len() as _,
+            compressed_size: compressed_data_pre_padding as _,
+            raw_size: data.len() as _,
+            // cipher_magic: Compression::FOURCC
+        };
+
+        object.extend(bytemuck::bytes_of(&header));
         object.extend(ciphered_data.to_owned());
 
         Ok(object)
     }
-
-}
-
-
-impl<Compression: Compressor, Ciphering: Cipher> EncryptedObject<Compression, Ciphering> {
-
-    pub fn print_information(compression_magic: &[u8], cipher_magic: &[u8],
-                             object_size: &usize, encrypted_size: &u32, compressed_size: &u32,
-                             raw_size: &u32) {
-        let cipher_fourcc = u32::from_le_bytes(cipher_magic.try_into().unwrap());
-
-        println!("Compression Magic (FourCC): {:?}",
-                 String::from_utf8(Vec::from(compression_magic)).unwrap());
-
-        if cipher_fourcc == 0 {
-            println!("Object is Not ciphered");
-        } else {
-            println!("Cipher Magic (FourCC): {:?}",
-                     String::from_utf8_lossy(cipher_magic));
-        }
-
-        println!("Encrypted Size: {:?}", &encrypted_size);
-        println!("Compressed Size: {:?}", &compressed_size);
-        println!("Raw Size: {:?}", &raw_size);
-
-        println!("Processed Object Size: {:?}", &object_size);
-    }
-
 }

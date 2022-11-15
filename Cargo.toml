@@ -4,6 +4,7 @@ members = [
     "base",
     "lyketo",
     "eter",
+    "etervfs",
     "maps",
     "sfx",
     "vfx",

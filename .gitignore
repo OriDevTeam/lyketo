@@ -5,3 +5,8 @@
 # Temp files
 /eter/tests/data
 /vfx/tests/data
+
+eter/tests/encrypted_object/type_2/bgm
+
+etervfs/tests/data/eterfs_m2/
+

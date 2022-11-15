@@ -40,7 +40,7 @@ impl Mesh {
                 let _index = index(size, y, x);
                 
                 /*
-                self.vertices[index].positions = Vec3::new(
+                self.vertices[pathm].positions = Vec3::new(
                     x.into(),
                     y.into(),
                     (chunk.size() - x).into()
@@ -51,7 +51,7 @@ impl Mesh {
                 let _y: f32 = (y / size).into();
                 
                 /*
-                self.vertices[index].texture_coordinates = TextureCoordinates {
+                self.vertices[pathm].texture_coordinates = TextureCoordinates {
                     x: min_partial!(0.0, max_partial!(_x, 0.99)),
                     y: min_partial!(0.0, max_partial!(_y, 0.99))
                 };

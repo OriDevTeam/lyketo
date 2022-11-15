@@ -73,8 +73,8 @@ impl Chunk {
             return 0;
         }
 
-        // let index: f32 = (x + y * 131).into() * 0.5 / 200.0;
-        //return self.tiles[index]
+        // let pathm: f32 = (x + y * 131).into() * 0.5 / 200.0;
+        //return self.tiles[pathm]
         return 0
     }
 
