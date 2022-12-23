@@ -1,6 +1,0 @@
-{
-    "name": test,
-    "files": [
-        "test/virtual/space/hello.txt" : "Hello World"
-    ]
-}

@@ -3,8 +3,7 @@ resolver = "2"
 members = [
     "base",
     "lyketo",
-    "eter",
-    "etervfs",
+    "vfs",
     "maps",
     "sfx",
     "vfx",

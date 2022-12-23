@@ -23,8 +23,8 @@
 | Name        | Status | Crates.io                                             | Documentation                                       | Build |
 |-------------|--------|-------------------------------------------------------|-----------------------------------------------------|-------|
 | lyketo-eter | ?      | [![eter-crate][lyketo:eter-badge]][lyketo:eter-crate] | [![eter-crate][lyketo:eter-docs]][lyketo:eter-docs] | ?     |
-| lyketo-maps | ?      | [![eter-crate][lyketo:maps-badge]][lyketo:maps-crate] | [![eter-crate][lyketo:maps-docs]][lyketo:maps-docs] | ?     |
-| lyketo-vfx  | ?      | [![eter-crate][lyketo:vfx-badge]][lyketo:vfx-crate]   | [![eter-crate][lyketo:vfx-docs]][lyketo:vfx-docs]   | ?     |
-| lyketo-sfx  | ?      | [![eter-crate][lyketo:sfx-badge]][lyketo:sfx-crate]   | [![eter-crate][lyketo:sfx-docs]][lyketo:sfx-docs]   | ?     |
+| lyketo-maps | ?      | [![maps-crate][lyketo:maps-badge]][lyketo:maps-crate] | [![maps-crate][lyketo:maps-docs]][lyketo:maps-docs] | ?     |
+| lyketo-vfx  | ?      | [![vfx-crate][lyketo:vfx-badge]][lyketo:vfx-crate]    | [![vfx-crate][lyketo:vfx-docs]][lyketo:vfx-docs]    | ?     |
+| lyketo-sfx  | ?      | [![sfx-crate][lyketo:sfx-badge]][lyketo:sfx-crate]    | [![sfx-crate][lyketo:sfx-docs]][lyketo:sfx-docs]    | ?     |
 
 

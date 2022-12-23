@@ -1,0 +1,21 @@
+{
+  // Search Mode can be either "Disk" or "Virtual", default mode is "Virtual"
+  // When getting files it will first search on the "Disk" or in the
+  "search_mode": "Disk",
+
+  // Here is a registry of the pack files and their virtual paths
+  // Pack files content are related to their virtual space, for example
+  // the "*" is a wildcard that means "any pack file" and "pack/" means that
+  // "any pack file" has the "pack/" path
+  "packs": {
+    "*": [
+      "pack/"
+    ],
+
+    "test": [
+      "test/virtual/space/"
+    ],
+
+  },
+}
+

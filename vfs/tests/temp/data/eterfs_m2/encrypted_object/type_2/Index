@@ -1,0 +1,73 @@
+PACK
+*
+pack/
+d:/ymir work/pc/
+pc
+d:/ymir work/pc2/
+pc2
+d:/ymir work/monster/
+monster
+d:/ymir work/monster2/
+monster2
+d:/ymir work/effect/
+effect
+d:/ymir work/zone/
+zone
+d:/ymir work/terrainmaps/
+terrain
+d:/ymir work/npc/
+npc
+d:/ymir work/npc2/
+npc2
+d:/ymir work/tree/
+tree
+d:/ymir work/guild/
+guild
+d:/ymir work/item/
+item
+textureset/
+textureset
+property/
+property
+icon/
+icon
+sound/ambience/
+sound
+sound/common/
+sound
+sound/effect/
+sound
+sound/monster/
+sound
+sound/npc/
+sound
+sound/pc/
+sound
+sound/ui/
+sound
+bgm/
+bgm
+d:/ymir work/special/
+ETC
+d:/ymir work/environment/
+ETC
+locale/en/
+locale_en
+uiscript/
+uiscript
+d:/ymir work/ui/
+ETC
+d:/ymir work/uiloading/
+uiloading
+metin2_map_a1/
+metin2_map_a1
+metin2_map_world2/
+metin2_map_world2
+metin2_map_c1/
+metin2_map_c1
+pack/
+metin2_map_monkeydungeon
+metin2_map_b1/
+metin2_map_b1
+metin2_map_a2_1/
+metin2_map_a2_1
