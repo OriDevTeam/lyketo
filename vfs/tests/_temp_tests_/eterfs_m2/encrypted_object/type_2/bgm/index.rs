@@ -3,11 +3,12 @@ use std::fs;
 use std::path::Path;
 
 // Crate Uses
-use crate::temp::eterfs_m2::encrypted_object::type_2::bgm::BGM_INDEX_PATH;
+use crate::_temp_tests_::eterfs_m2::encrypted_object::type_2::bgm::BGM_INDEX_PATH;
 
 // External Uses
-use lyketo_vfs::formats::encrypted_object::ETER_INDEX_KEY;
+use lyketo_vfs::formats::encrypted_object::types::type_2::ETER_INDEX_KEY;
 use lyketo_vfs::formats::encrypted_object::types::Type2;
+use lyketo_vfs::formats::MCOZ_FOURCC;
 
 
 const EXPECTED_DECOMPRESSED_INDEX: [u8; 1356] = [
@@ -66,7 +67,10 @@ pub fn load_index_deserialize() {
     let path = Path::new(BGM_INDEX_PATH);
     let file = fs::read(path).unwrap();
 
-    let packer = Type2::with_key(ETER_INDEX_KEY.clone());
+    // let packer = Type2::with_key(ETER_INDEX_KEY.clone());
+    let packer = Type2::with_properties(
+        ETER_INDEX_KEY.clone(), *MCOZ_FOURCC, *MCOZ_FOURCC
+    );
 
     let index_object = packer.deserialize(file, true).unwrap();
 

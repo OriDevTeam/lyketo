@@ -5,8 +5,9 @@
 // Crate Uses
 
 // External Uses
-use lyketo_vfs::formats::encrypted_object::ETER_INDEX_KEY;
 use lyketo_vfs::formats::encrypted_object::types::Type2;
+use lyketo_vfs::formats::encrypted_object::types::type_2::ETER_INDEX_KEY;
+use lyketo_vfs::formats::{MCOZ_FOURCC, MCSP_FOURCC};
 
 
 const RAW_DATA: &[u8; 33] = b"Hello, this is an message object!";
@@ -27,7 +28,9 @@ const EXPECTED_SERIALIZED_DATA: [u8; 56] = [
 pub fn create_serialize_object() {
     println!("\nCreating and serializing a hello message:");
 
-    let packer = Type2::with_key(ETER_INDEX_KEY.clone());
+    let packer = Type2::with_properties(
+        ETER_INDEX_KEY.clone(), *MCOZ_FOURCC, *MCOZ_FOURCC
+    );
 
     let serialized = packer.serialize(RAW_DATA.to_vec()).unwrap();
 
@@ -39,11 +42,12 @@ pub fn create_serialize_object() {
 pub fn create_deserialize_object() {
     println!("\nDeserializing a hello message:");
 
-    let packer = Type2::with_key(ETER_INDEX_KEY.clone());
+    // let packer = Type2::with_key(ETER_INDEX_KEY.clone());
+    let packer = Type2::with_properties(
+        ETER_INDEX_KEY.clone(), *MCOZ_FOURCC, *MCSP_FOURCC
+    );
 
-    let deserialized = packer.deserialize(
-        EXPECTED_SERIALIZED_DATA.to_vec(), true
-    ).unwrap();
+    let deserialized = packer.deserialize(EXPECTED_SERIALIZED_DATA.to_vec(), true).unwrap();
 
     assert_eq!(deserialized, RAW_DATA);
 }

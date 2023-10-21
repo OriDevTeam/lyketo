@@ -13,14 +13,12 @@ pub struct Key {
 }
 
 impl Key {
-    pub fn from_decimals_u32(decimals: Vec<u32>) -> Self {
+    pub fn from_segments_u32(decimals: Vec<u32>) -> Self {
         let segments: Vec<[u8; 4]> = decimals.iter().map(|s| {
             bytemuck::cast::<u32, [u8; 4]>(*s)
         }).collect();
 
-        Self {
-            segments
-        }
+        Self { segments }
     }
 
     /// Flips the byte order between Little and Big Endian

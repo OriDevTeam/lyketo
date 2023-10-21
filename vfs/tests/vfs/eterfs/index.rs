@@ -8,8 +8,8 @@ use lyketo_vfs::vfs::eterfs::index;
 use lyketo_vfs::vfs::eterfs::index::Search;
 
 
-pub const LEGACY_INDEX_PATH: &str = "tests/data/eterfs_m2/Index";
-pub const JSON5_INDEX_PATH: &str = "tests/data/eterfs_m2/Index.json5";
+pub const LEGACY_INDEX_PATH: &str = "tests/__data__/eterfs_m2/Index";
+pub const JSON5_INDEX_PATH: &str = "tests/__data__/eterfs_m2/Index.json5";
 
 
 #[test]

@@ -14,7 +14,9 @@ use byteorder::LE;
 pub struct XTEA {}
 
 impl Cipher for XTEA {
-    fn encrypt(data: &Vec<u8>, key: Vec<u8>) -> Result<Vec<u8>> {
+    const NAME: &'static str = "XTEA";
+
+    fn encrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
         if key.len() != mem::size_of::<[u32; 4]>() {
             bail!("Expected {} bytes for key, got {} instead",
                 mem::size_of::<[u32; 4]>(), key.len()
@@ -31,7 +33,7 @@ impl Cipher for XTEA {
         Ok(Vec::from(output))
     }
 
-    fn decrypt(data: &Vec<u8>, key: Vec<u8>) -> Result<Vec<u8>> {
+    fn decrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
         if key.len() != mem::size_of::<[u32; 4]>() {
             bail!("Expected {} bytes for key, got {} instead",
                 mem::size_of::<[u32; 4]>(), key.len()

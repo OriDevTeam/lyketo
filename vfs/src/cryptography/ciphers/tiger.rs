@@ -12,11 +12,13 @@ pub struct Tiger {}
 
 #[allow(unused)]
 impl Cipher for Tiger {
-    fn encrypt(data: &Vec<u8>, key: Vec<u8>) -> Result<Vec<u8>> {
+    const NAME: &'static str = "Tiger";
+
+    fn encrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
         todo!()
     }
 
-    fn decrypt(data: &Vec<u8>, key: Vec<u8>) -> Result<Vec<u8>> {
+    fn decrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
         todo!()
     }
 }

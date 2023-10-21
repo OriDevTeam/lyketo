@@ -9,7 +9,7 @@ use lyketo_vfs::utils::key::Key;
 
 #[test]
 fn create_key() {
-    let key = Key::from_decimals_u32(vec![45129401_u32, 92367215, 681285731, 1710201]);
+    let key = Key::from_segments_u32(vec![45129401_u32, 92367215, 681285731, 1710201]);
 
     println!("{}", key.to_hex_le());
     println!("{}", key.to_hex_be());

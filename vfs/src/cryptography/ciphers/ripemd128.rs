@@ -13,14 +13,17 @@ pub struct RIPEMD128 {}
 
 #[allow(unused)]
 impl Cipher for RIPEMD128 {
-    fn encrypt(data: &Vec<u8>, key: Vec<u8>) -> Result<Vec<u8>> {
+    const NAME: &'static str = "RIPEMD128";
+
+    fn encrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
         let mut hasher = Ripemd128::new();
         hasher.input(data);
 
         Ok(hasher.result().to_vec())
     }
 
-    fn decrypt(_data: &Vec<u8>, key: Vec<u8>) -> Result<Vec<u8>> {
+    #[allow(unused)]
+    fn decrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
         todo!()
     }
 }

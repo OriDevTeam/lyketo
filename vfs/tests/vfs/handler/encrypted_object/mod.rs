@@ -13,11 +13,11 @@ use lyketo_vfs::utils::key::Key;
 // pub const PATH: &str = "tests/data/eterfs/test.mock";
 
 lazy_static!(
-    static ref DEFAULT_COMPRESSION_KEY: Key = Key::from_decimals_u32(
+    static ref DEFAULT_COMPRESSION_KEY: Key = Key::from_segments_u32(
         vec![45129401, 92367215, 681285731, 1710201]
     );
 
-    static ref DEFAULT_SECURITY_KEY: Key = Key::from_decimals_u32(
+    static ref DEFAULT_SECURITY_KEY: Key = Key::from_segments_u32(
         vec![78952482, 527348324, 1632942, 486274726]
     );
 );

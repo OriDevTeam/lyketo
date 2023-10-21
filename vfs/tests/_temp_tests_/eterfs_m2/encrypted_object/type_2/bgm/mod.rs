@@ -11,8 +11,8 @@ use std::path::Path;
 use lyketo_vfs::vfs::eterfs::units::eter_unit::Unit;
 
 
-pub const BGM_INDEX_PATH: &str = "tests/temp/data/eterfs_m2/encrypted_object/type_2/BGM.eix";
-pub const BGM_DATA_PATH: &str = "tests/temp/data/eterfs_m2/encrypted_object/type_2/BGM.epk";
+pub const BGM_INDEX_PATH: &str = "tests/__temp_data__/eterfs_m2/encrypted_object/type_2/BGM.eix";
+pub const BGM_DATA_PATH: &str = "tests/__temp_data__/eterfs_m2/encrypted_object/type_2/BGM.epk";
 
 
 #[test]

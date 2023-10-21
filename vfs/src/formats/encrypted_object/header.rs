@@ -59,7 +59,7 @@ impl Header {
             if self.ciphered_size > 0 {
                 return (
                     mem::size_of::<Self>() as u32 + mem::size_of::<FourCC>() as u32
-                    + self.ciphered_size
+                        + self.ciphered_size
                 ) as u32
             }
 
@@ -73,40 +73,37 @@ impl Header {
         self.raw_size
     }
 
-    pub fn print_information(&self, object: &Vec<u8>, log: bool) {
-        if !log {
-            return
-        };
-
+    pub fn print_pre_deciphering_info(&self) {
         if self.ciphered_size > 0 && self.compressed_size > 0 {
-            println!("Object is Ciphered and Compressed");
+            println!("Object is Ciphered and Compressed (according to Header)");
         } else if self.ciphered_size > 0 {
-            println!("Object is Ciphered");
+            println!("Object is Ciphered only (according to Header)");
         } else if self.compressed_size > 0{
-            println!("Object is Compressed");
+            println!("Object is Compressed only (according to Header)");
         } else {
             println!("Object is Raw")
         }
 
-        println!("Compression Magic (FourCC): {}",
-                 four_cc::to_string(&self.compression_magic)
+        println!(
+            "Compression Magic (FourCC): {}", four_cc::to_string(&self.compression_magic)
         );
 
-        // TODO: Move this information display to ciphering stage
-        /*
-        if self.cipher_magic == 0 {
-            println!("Object is Not ciphered");
-        } else {
-            println!("Cipher Magic (FourCC): {}", four_cc::to_string(&self.cipher_magic));
-        }
-        */
-
-        println!("Encrypted Size: {}", &self.ciphered_size);
-        println!("Compressed Size: {}", &self.compressed_size);
-        println!("Raw Size: {}", &self.raw_size);
-
-        println!("Processed Object Data Size: {:?}", &object.len());
+        println!("Encrypted Size (in Header): {}", &self.ciphered_size);
+        println!("Compressed Size (in Header): {}", &self.compressed_size);
+        println!("Raw Size (in Header): {}", &self.raw_size);
     }
 
+    pub fn print_pre_decompression_info(&self) {
+        // TODO: This only reflects what the header says, actual data
+        //       might tell something different and we should rely on data
+        /*
+        if self.ciphered_size == 0 {
+            println!("Object is Not ciphered, skipping decipher");
+        } else {
+            println!("Object Is ciphered")
+            // println!("Cipher Magic (FourCC): {}", four_cc::to_string(&self.cipher_magic));
+        }
+        */
+    }
 }
 

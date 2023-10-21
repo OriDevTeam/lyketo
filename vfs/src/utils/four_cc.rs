@@ -30,6 +30,8 @@ pub fn from_bytes(bytes: [u8; 4]) -> FourCC {
 }
 
 
+// TODO: Why is this asking for a FourCC reference? a u32 could just be cloned
+//       so change to not "&FourCC", but "FourCC" only
 pub fn to_string(cc: &FourCC) -> String {
     String::from_utf8_lossy(&*Vec::from(cc.to_le_bytes())).to_string()
 }

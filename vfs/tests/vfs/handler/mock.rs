@@ -12,8 +12,9 @@ const PATH: &str = "tests/data/eterfs/test.mock";
 
 #[test]
 pub fn create_handler () {
-    let vfs = Box::new(Eter::new());
-        // Lets create a mock handler for testing purposes, its simple and straightforward
+    let vfs = Box::new(Eter::default());
+
+    // Lets create a mock handler for testing purposes, its simple and straightforward
     // to mess with
     let mut handler = Mock::new(vfs);
 

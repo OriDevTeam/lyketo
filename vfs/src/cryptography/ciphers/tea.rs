@@ -16,7 +16,9 @@ pub struct TEA {}
 
 
 impl Cipher for TEA {
-    fn encrypt(data: &Vec<u8>, key: Vec<u8>) -> Result<Vec<u8>> {
+    const NAME: &'static str = "TEA";
+
+    fn encrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
         if key.len() != mem::size_of::<[u8; 4]>() {
             bail!("Expected {} bytes, got {} instead", mem::size_of::<[u8; 4]>(), key.len());
         }
@@ -49,7 +51,7 @@ impl Cipher for TEA {
         Ok(ciphered_data)
     }
 
-    fn decrypt(data: &Vec<u8>, key: Vec<u8>) -> Result<Vec<u8>> {
+    fn decrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
         if data.len() % 8 != 0 {
             bail!("Expected data to be the length of a multiple of 8, got {} instead", data.len());
         }

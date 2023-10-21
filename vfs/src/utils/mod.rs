@@ -2,10 +2,6 @@
 pub mod four_cc;
 pub mod key;
 
-// Standard Uses
 
-// Crate Uses
-
-// External Uses
-
+pub type CRC32 = u32;
 

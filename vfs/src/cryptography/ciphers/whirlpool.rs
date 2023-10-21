@@ -13,14 +13,16 @@ pub struct Whirlpool {}
 
 #[allow(unused)]
 impl Cipher for Whirlpool {
-    fn encrypt(data: &Vec<u8>, key: Vec<u8>) -> Result<Vec<u8>> {
+    const NAME: &'static str = "Whirlpool";
+
+    fn encrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
         let mut hasher = WhirlpoolWrapper::new();
         hasher.update(data);
 
         Ok(hasher.finalize().to_vec())
     }
 
-    fn decrypt(data: &Vec<u8>, key: Vec<u8>) -> Result<Vec<u8>> {
+    fn decrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
         let mut hasher = WhirlpoolWrapper::new();
         hasher.update(data);
 
