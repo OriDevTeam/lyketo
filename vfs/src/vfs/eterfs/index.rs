@@ -3,7 +3,6 @@ use std::fs;
 use std::collections::HashMap;
 
 // Crate Uses
-use crate::vfs::eterfs::index;
 
 // External Uses
 use anyhow::{bail, Context, Result};
@@ -39,7 +38,6 @@ impl Index {
 }
 
 
-
 pub fn find_index(pattern: &str) -> Result<Index> {
     let options = MatchOptions {
         case_sensitive: false,
@@ -54,8 +52,8 @@ pub fn find_index(pattern: &str) -> Result<Index> {
         let content = &fs::read_to_string(&entry_path)?;
 
         let index = match extension {
-            "" => index::load_legacy(content),
-            "json5" => index::load_json5(content),
+            "" => load_legacy(content),
+            "json5" => load_json5(content),
             ext => bail!("Extension {} is not a known valid extension for Index", ext)
         }.context("TODO: panic message");
 
@@ -67,7 +65,7 @@ pub fn find_index(pattern: &str) -> Result<Index> {
 
 
 pub fn load_json5(content: &str) -> Result<Index> {
-    json5::from_str(content).context("Could not parse JSON5 Index")
+    json5::from_str(content).context("Couldn't parse JSON5 Index")
 }
 
 
@@ -86,10 +84,7 @@ pub fn load_legacy(content: &str) -> Result<Index> {
         let name = lines[i];
         let path = lines[i + 1].to_string();
 
-        if !map.packs.entry(name.to_string())
-            .or_insert(vec![])
-            .contains(&path)
-        {
+        if !map.packs.entry(name.to_string()).or_default().contains(&path) {
             map.packs.get_mut(name).map(|val| val.push(path));
         }
     }

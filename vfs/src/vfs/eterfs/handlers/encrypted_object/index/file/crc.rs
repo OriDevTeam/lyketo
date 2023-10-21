@@ -2,8 +2,8 @@
 use std::mem;
 
 // Crate Uses
-use crate::vfs::eterfs::CRC32;
 use crate::vfs::eterfs::handlers::encrypted_object::index::FILE_NAME_LEN;
+use crate::utils::CRC32;
 
 // External Uses
 

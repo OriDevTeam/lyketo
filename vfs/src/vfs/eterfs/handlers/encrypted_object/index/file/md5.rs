@@ -7,8 +7,8 @@
 // Standard Uses
 
 // Crate Uses
-use crate::vfs::eterfs::CRC32;
 use crate::vfs::eterfs::handlers::encrypted_object::index::FILE_NAME_LEN;
+use crate::utils::CRC32;
 
 // External Uses
 
@@ -16,7 +16,7 @@ use crate::vfs::eterfs::handlers::encrypted_object::index::FILE_NAME_LEN;
 pub struct IndexMD5 {
     pub id: i32,
     pub file_name: [u8; FILE_NAME_LEN + 1],
-    pub file_crc: CRC32, // TODO: replace with MD5 instead
+    pub file_crc: CRC32, // TODO: replace with blake instead
     pub raw_data_size: i32,
     pub processed_data_size: i32,
     pub processed_data_crc: CRC32,

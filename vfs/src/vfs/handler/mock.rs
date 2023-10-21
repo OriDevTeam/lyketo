@@ -22,8 +22,7 @@ impl Mock {
     pub fn new(vfs: Box<dyn FileSystem>) -> Self { Self { key: None, vfs } }
 
     pub fn set_key(&mut self, key: String) -> Result<()> {
-        self.key = Option::from(key);
-
+        self.key = Some(key);
         Ok(())
     }
 
