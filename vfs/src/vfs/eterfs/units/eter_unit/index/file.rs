@@ -7,7 +7,7 @@ use std::io::Cursor;
 // Crate Uses
 
 // External Uses
-use anyhow::Result;
+use eyre::Result;
 use byteorder::{LittleEndian, ReadBytesExt};
 use bytes::Buf;
 

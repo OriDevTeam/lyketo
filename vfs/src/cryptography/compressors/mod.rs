@@ -1,21 +1,18 @@
 // Relative Modules
 pub(crate) mod snappy;
-pub(crate) mod minilzo;
-pub(crate) mod lzo;
 pub(crate) mod lzo_mini;
-pub(crate) mod lzo_mini3;
-
 
 // Standard Uses
 
 // Crate Uses
-// use crate::utils::four_cc;
+use crate::utils::four_cc::FourCC;
 
 // External Uses
-use anyhow::Result;
+use eyre::Result;
+
 
 pub trait Compressor {
-    // const FOURCC: u32;
+    const FOURCC: FourCC;
     const NAME: &'static str;
 
     fn compress(data: &[u8]) -> Result<Vec<u8>>;
@@ -26,7 +23,7 @@ pub trait Compressor {
 pub struct None;
 
 impl Compressor for None {
-    // const FOURCC: u32 = 0;
+    const FOURCC: FourCC = 0;
     const NAME: &'static str = "None";
 
     fn compress(data: &[u8]) -> Result<Vec<u8>> {

@@ -18,7 +18,7 @@ pub const BGM_DATA_PATH: &str = "tests/__temp_data__/eterfs_m2/encrypted_object/
 #[test]
 fn load_unit() {
     let index_path = Path::new(BGM_INDEX_PATH);
-    let mut unit = Unit::from_path(index_path).unwrap();
+    let mut unit = Unit::from_path(index_path, true).unwrap();
 
     println!("Files in unit: {:?}", unit.files_in_unit());
 

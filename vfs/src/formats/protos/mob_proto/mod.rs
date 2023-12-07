@@ -9,14 +9,15 @@ use std::io::Cursor;
 use crate::utils::four_cc;
 use crate::utils::key::Key;
 use crate::utils::four_cc::FourCC;
-use crate::formats::encrypted_object::types::Type6;
 use crate::formats::protos::mob_proto::mmpt::MAGIC_VERSION_2_FCC;
+use crate::formats::encrypted_object::methods::basic::types::Type6;
+use crate::formats::MMPT_FOURCC;
+
 
 // External Uses
-use anyhow::{Result, bail};
+use eyre::{Result, bail};
 use byteorder::{LittleEndian, ReadBytesExt};
 use lazy_static::lazy_static;
-use crate::formats::{MCSP_FOURCC, MMPT_FOURCC};
 
 
 lazy_static!(
@@ -75,8 +76,8 @@ impl MobProto {
         if magic != *MMPT_FOURCC {
             bail!(
                 "Expected Magic/FourCC {}({}), but got {}({}) instead",
-                *MMPT_FOURCC, four_cc::to_string(&MMPT_FOURCC),
-                magic, four_cc::to_string(&magic)
+                *MMPT_FOURCC, four_cc::to_string(*MMPT_FOURCC),
+                magic, four_cc::to_string(magic)
             )
         }
 
@@ -88,10 +89,7 @@ impl MobProto {
             bail!("Expected {expected_content_size} after metadata, got {content_size} instead", )
         }
 
-        let handler = Type6::with_properties(
-            DEFAULT_KEY.clone(),
-            MCSP_FOURCC.clone(), MCSP_FOURCC.clone()
-        );
+        let handler = Type6::with_key(DEFAULT_KEY.clone());
         let object = cursor.into_inner()[4 + 4 + 4..content_size as usize + 8].to_vec();
         let data = handler.deserialize(object, true).unwrap();
 

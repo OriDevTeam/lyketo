@@ -1,9 +1,3 @@
 // Relative Modules
-mod mob_proto;
-
-// Standard Uses
-
-// Crate Uses
-
-// External Uses
-
+pub mod mob_proto;
+pub mod item_proto;

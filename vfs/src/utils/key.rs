@@ -32,7 +32,7 @@ impl Key {
         let mut flipped = vec![];
 
         for segment in &self.segments {
-            let mut seg_flip = segment.clone();
+            let mut seg_flip = *segment;
             seg_flip.reverse();
             flipped.push(seg_flip);
         }
@@ -53,7 +53,7 @@ impl Key {
 
         for segment in &self.segments_le() {
             for byte in segment {
-                repr.push_str(&*format!("{:02X}", byte));
+                repr.push_str(&format!("{:02X}", byte));
             }
         }
 
@@ -65,7 +65,7 @@ impl Key {
 
         for segment in &self.segments_be() {
             for byte in segment {
-                repr.push_str(&*format!("{:02X}", byte));
+                repr.push_str(&format!("{:02X}", byte));
             }
         }
 
@@ -128,7 +128,7 @@ impl Key {
 
 #[allow(unused)]
 impl TryFrom<[u32; 4]> for Key {
-    type Error = anyhow::Error;
+    type Error = eyre::Error;
 
     fn try_from(value: [u32; 4]) -> Result<Self, Self::Error> {
         todo!()

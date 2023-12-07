@@ -6,7 +6,7 @@ use crate::utils::four_cc;
 use crate::utils::four_cc::FourCC;
 
 // External Uses
-use anyhow::Result;
+use eyre::Result;
 use byteorder::{LittleEndian, ReadBytesExt};
 use lazy_static::lazy_static;
 

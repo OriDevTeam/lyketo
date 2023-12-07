@@ -10,5 +10,5 @@ members = [
     "gui/src-tauri"
 ]
 
-[profile.dev]
+[profile.release]
 opt-level = 2

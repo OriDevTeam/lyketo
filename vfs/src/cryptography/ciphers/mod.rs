@@ -9,12 +9,14 @@ pub(crate) mod tea;
 // Standard Uses
 
 // Crate Uses
+use crate::utils::four_cc::FourCC;
 
 // External Uses
-use anyhow::Result;
+use eyre::Result;
 
 
 pub trait Cipher {
+    const FOURCC: FourCC;
     const NAME: &'static str;
 
     fn encrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>>;
@@ -25,6 +27,7 @@ pub trait Cipher {
 pub struct None;
 
 impl Cipher for None {
+    const FOURCC: FourCC = 0;
     const NAME: &'static str = "None";
 
     #[allow(unused)]

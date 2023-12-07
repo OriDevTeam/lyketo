@@ -5,7 +5,7 @@ use std::collections::HashMap;
 // Crate Uses
 
 // External Uses
-use anyhow::{bail, Context, Result};
+use eyre::{bail, Context, Result};
 use glob::{glob_with, MatchOptions};
 use serde::{Serialize, Deserialize};
 
@@ -13,7 +13,9 @@ use serde::{Serialize, Deserialize};
 /// Mode to search the requested resolved files in
 #[derive(Serialize, Deserialize)]
 #[derive(Debug, Eq, PartialEq)]
+#[derive(Default)]
 pub enum Search {
+    #[default]
     /// Disk means that first searches are made in the physical drives/partitions
     Disk,
 
@@ -22,6 +24,7 @@ pub enum Search {
 }
 
 
+#[derive(Default)]
 #[derive(Serialize, Deserialize)]
 pub struct Index {
     pub search_mode: Search,
@@ -45,7 +48,7 @@ pub fn find_index(pattern: &str) -> Result<Index> {
         require_literal_leading_dot: false,
     };
 
-    for entry in glob_with(&pattern, options).expect("") {
+    if let Some(entry) = glob_with(pattern, options).expect("").next() {
         let entry_path = entry?;
         let extension = entry_path.extension().unwrap().to_str().unwrap();
 
@@ -65,7 +68,8 @@ pub fn find_index(pattern: &str) -> Result<Index> {
 
 
 pub fn load_json5(content: &str) -> Result<Index> {
-    json5::from_str(content).context("Couldn't parse JSON5 Index")
+    json5::from_str(content)
+        .wrap_err_with(||"Couldn't parse JSON5 Index")
 }
 
 
@@ -85,7 +89,9 @@ pub fn load_legacy(content: &str) -> Result<Index> {
         let path = lines[i + 1].to_string();
 
         if !map.packs.entry(name.to_string()).or_default().contains(&path) {
-            map.packs.get_mut(name).map(|val| val.push(path));
+            if let Some(val) = map.packs.get_mut(name) {
+                val.push(path)
+            };
         }
     }
 

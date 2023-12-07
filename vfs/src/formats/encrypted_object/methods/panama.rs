@@ -8,7 +8,7 @@ use crate::cryptography::ciphers::whirlpool::Whirlpool;
 use crate::cryptography::ciphers::ripemd128::RIPEMD128;
 
 // External Uses
-use anyhow::{Result, bail};
+use eyre::{Result, bail};
 use enum_dispatch::enum_dispatch;
 use strum::EnumCount;
 use strum_macros::{EnumIter};
@@ -95,9 +95,9 @@ impl FilenameCipher {
 }
 
 
-
-#[derive(Debug, EnumCount, EnumIter)]
 #[enum_dispatch(Cipher)]
+#[derive(EnumCount, EnumIter)]
+#[derive(Debug)]
 enum PanamaKeyCipher {
     SHA1(SHA1),
     RIPEMD128(RIPEMD128),

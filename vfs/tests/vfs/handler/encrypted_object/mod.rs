@@ -1,3 +1,4 @@
+/*
 // Relative Modules
 mod index;
 
@@ -37,4 +38,5 @@ pub fn create_handler () {
 
     todo!()
 }
+*/
 

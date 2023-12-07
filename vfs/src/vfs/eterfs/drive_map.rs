@@ -7,7 +7,7 @@ use crate::vfs::eterfs::index::Index;
 use crate::utils::CRC32;
 
 // External Uses
-use anyhow::{bail, Result};
+use eyre::{bail, Result};
 
 
 #[allow(unused)]

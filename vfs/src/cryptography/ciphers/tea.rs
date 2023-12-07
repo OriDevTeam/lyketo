@@ -5,17 +5,20 @@ use std::mem;
 use crate::cryptography::ciphers::Cipher;
 
 // External Uses
-use anyhow::{bail, Result};
+use eyre::{bail, Result};
 use tea_soft::block_cipher::generic_array::GenericArray;
 use tea_soft::block_cipher::{BlockCipher, NewBlockCipher};
 use tea_soft::Tea32;
+use crate::utils::four_cc::FourCC;
 
 
+#[allow(clippy::upper_case_acronyms)]
 #[derive(Debug, Default)]
 pub struct TEA {}
 
 
 impl Cipher for TEA {
+    const FOURCC: FourCC = 0;
     const NAME: &'static str = "TEA";
 
     fn encrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
@@ -31,7 +34,7 @@ impl Cipher for TEA {
 
         let key = GenericArray::from_slice(&key[0..16]);
 
-        let cipher = Tea32::new(&key);
+        let cipher = Tea32::new(key);
 
         let mut ciphered_data = Vec::with_capacity(data.len());
 
@@ -60,7 +63,7 @@ impl Cipher for TEA {
 
         let key = GenericArray::from_slice(&key[0..16]);
 
-        let cipher = Tea32::new(&key);
+        let cipher = Tea32::new(key);
 
         let mut deciphered_data= Vec::with_capacity(data.len());
 

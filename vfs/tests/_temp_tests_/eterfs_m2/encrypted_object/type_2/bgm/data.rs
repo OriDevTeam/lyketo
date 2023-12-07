@@ -6,8 +6,8 @@ use std::path::Path;
 use crate::_temp_tests_::eterfs_m2::encrypted_object::type_2::bgm::BGM_DATA_PATH;
 
 // External Uses
-use lyketo_vfs::formats::encrypted_object::types::type_2::ETER_DATA_KEY;
-use lyketo_vfs::formats::encrypted_object::types::Type2;
+use lyketo_vfs::formats::encrypted_object::methods::basic::types::type_2::ETER_DATA_KEY;
+use lyketo_vfs::formats::encrypted_object::methods::basic::types::Type2;
 use lyketo_vfs::formats::MCOZ_FOURCC;
 
 
@@ -17,7 +17,7 @@ pub fn load_data_deserialize() {
     let file = fs::read(path).unwrap();
 
     // let packer = Type2::with_key(ETER_DATA_KEY.clone());
-    let packer = Type2::with_properties(
+    let packer = Type2::with_key(
         ETER_DATA_KEY.clone(), *MCOZ_FOURCC, *MCOZ_FOURCC
     );
 

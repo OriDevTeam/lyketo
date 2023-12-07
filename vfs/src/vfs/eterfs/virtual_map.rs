@@ -6,7 +6,7 @@ use crate::vfs::file::MemFile;
 use crate::utils::CRC32;
 
 // External Uses
-use anyhow::Result;
+use eyre::Result;
 use crc32fast::Hasher;
 
 
@@ -38,10 +38,10 @@ impl VirtualMap {
     pub fn add_file(&mut self, name: String, file: MemFile) {
         let mut hasher = Hasher::new();
 
-        hasher.update(&*file);
+        hasher.update(&file);
         let checksum = hasher.finalize();
 
-        self.files.entry(checksum).or_insert(vec![]).push(file);
+        self.files.entry(checksum).or_default().push(file);
         self.names.insert(name, checksum);
     }
 }

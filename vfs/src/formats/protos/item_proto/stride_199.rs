@@ -1,5 +1,6 @@
 // Standard Uses
 use std::ffi::c_char;
+use bytemuck::{Pod, Zeroable};
 
 // Crate Uses
 
@@ -14,9 +15,9 @@ const ITEM_SOCKETS_MAXIMUM: usize = 6;
 
 
 #[derive(Copy, Clone, Debug)]
-// #[derive(Pod, Zeroable)]
+#[derive(Pod, Zeroable)]
 #[repr(C, packed(1))]
-pub struct ItemTable {
+pub struct Record {
     vnum: u32,
     vnum_range: u32,
     name: [c_char; ITEM_NAME_LENGTH + 1],
@@ -50,7 +51,7 @@ pub struct ItemTable {
 }
 
 #[derive(Copy, Clone, Debug)]
-// #[derive(Pod, Zeroable)]
+#[derive(Pod, Zeroable)]
 #[repr(C, packed(1))]
 pub struct ItemLimit {
     r#type: u8,
@@ -58,7 +59,7 @@ pub struct ItemLimit {
 }
 
 #[derive(Copy, Clone, Debug)]
-// #[derive(Pod, Zeroable)]
+#[derive(Pod, Zeroable)]
 #[repr(C, packed(1))]
 pub struct ItemApply {
     r#type: u16,

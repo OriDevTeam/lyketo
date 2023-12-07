@@ -4,8 +4,9 @@
 use crate::cryptography::ciphers::Cipher;
 
 // External Uses
-use anyhow::{Result};
+use eyre::{Result};
 use whirlpool::{Whirlpool as WhirlpoolWrapper, Digest};
+use crate::utils::four_cc::FourCC;
 
 
 #[derive(Debug, Default)]
@@ -13,6 +14,7 @@ pub struct Whirlpool {}
 
 #[allow(unused)]
 impl Cipher for Whirlpool {
+    const FOURCC: FourCC = 0;
     const NAME: &'static str = "Whirlpool";
 
     fn encrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {

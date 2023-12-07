@@ -8,7 +8,7 @@ use crate::formats::encrypted_object::header::Header;
 use crate::vfs::eterfs::handlers::encrypted_object::index::file::File;
 
 // External Uses
-use anyhow::Result;
+use eyre::Result;
 
 
 const FILE_NAME_LEN: usize = 160;

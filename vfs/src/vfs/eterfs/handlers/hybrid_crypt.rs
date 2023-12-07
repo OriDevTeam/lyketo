@@ -6,7 +6,7 @@ use crate::vfs::handler::Handler;
 use crate::vfs::unit::Unit;
 
 // External Uses
-use anyhow::{bail, Result};
+use eyre::{bail, Result};
 
 
 pub struct HybridCrypt {
@@ -17,7 +17,7 @@ pub struct HybridCrypt {
 #[allow(unused)]
 impl HybridCrypt {
     pub fn add_unit(&mut self, unit: Box<dyn Unit>) -> Result<()>{
-        if !self.vfs.is_some() {
+        if self.vfs.is_none() {
             bail!(
                 r#"No virtual file system is set, the handler cannot put virtual files anywhere.
                 Register this handler in a VFS to handle with units and virtual files.
@@ -47,6 +47,7 @@ impl Handler for HybridCrypt {
 
 
 #[allow(unused)]
+#[allow(clippy::upper_case_acronyms)]
 enum Cipher {
     Cammelia,
     Twofish,

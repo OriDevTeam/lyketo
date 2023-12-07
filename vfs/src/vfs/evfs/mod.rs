@@ -9,7 +9,7 @@ use crate::vfs::FileSystem;
 use crate::vfs::file::File;
 
 // External Uses
-use anyhow::Result;
+use eyre::Result;
 
 
 #[allow(unused)]

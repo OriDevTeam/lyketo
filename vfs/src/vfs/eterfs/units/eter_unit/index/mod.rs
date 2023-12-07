@@ -10,7 +10,7 @@ use crate::vfs::eterfs::units::eter_unit::index::file::File;
 use crate::vfs::eterfs::units::eter_unit::index::header::Header;
 
 // External Uses
-use anyhow::{bail, Result};
+use eyre::{bail, Result};
 
 
 #[allow(unused)]

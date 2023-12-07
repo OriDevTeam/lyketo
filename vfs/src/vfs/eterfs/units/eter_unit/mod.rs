@@ -11,16 +11,16 @@ use std::ffi::CStr;
 // Crate Uses
 use crate::vfs::file::MemFile;
 use crate::vfs::eterfs::units::eter_unit::index::Index;
-use crate::formats::encrypted_object::types::Type2;
-use crate::formats::encrypted_object::types::type_2::ETER_INDEX_KEY;
-use crate::formats::MCOZ_FOURCC;
+use crate::formats::encrypted_object::methods::basic;
+use crate::formats::encrypted_object::methods::basic::types::EterBasicType;
+use crate::formats::encrypted_object::methods::basic::types::type_2::ETER_INDEX_KEY;
 
 // External Uses
-use anyhow::Result;
+use eyre::Result;
 
 
 pub struct Unit {
-    pub handler: Type2,
+    pub handler: EterBasicType,
     pub index: Index,
     data: Vec<u8>,
     pub files: HashMap<u32, MemFile>
@@ -29,22 +29,21 @@ pub struct Unit {
 
 #[allow(unused)]
 impl Unit {
-    pub fn from_path(path: &Path) -> Result<Self> {
-        let handler = Type2::with_properties(
-            ETER_INDEX_KEY.clone(), *MCOZ_FOURCC, *MCOZ_FOURCC
-        );
-
+    pub fn from_path(index_path: &Path, log: bool) -> Result<Self> {
         // println!("Handling {}", path.display());
+        let index_data = fs::read(index_path)?;
 
-        let index_data = fs::read(path)?;
-        let index_raw = handler.deserialize(index_data, false)?;
-        let index = Index::from_bytes(index_raw)?;
+        let (deserialized, guessed_type) = basic::guess_type_and_deserialize(
+            ETER_INDEX_KEY.clone(), index_data, log
+        )?;
 
-        let unit_data_path = path.with_extension("epk");
+        let index = Index::from_bytes(deserialized)?;
+
+        let unit_data_path = index_path.with_extension("epk");
         let unit_data = fs::read(unit_data_path.as_path()).unwrap();
 
         Ok(Self {
-            handler,
+            handler: guessed_type,
             index,
             data: unit_data,
             files: Default::default()

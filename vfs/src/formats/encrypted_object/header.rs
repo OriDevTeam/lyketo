@@ -1,21 +1,21 @@
 // Standard Uses
 use std::io::Cursor;
-use std::mem;
 
 // Crate Uses
 use crate::utils::four_cc::FourCC;
 use crate::utils::four_cc;
 
 // External Uses
+use eyre::Result;
 use bytemuck::{Zeroable, Pod};
-use anyhow::Result;
 use byteorder::{LittleEndian, ReadBytesExt};
 
 
-#[derive(Copy, Clone, Zeroable, Pod)]
+#[derive(Copy, Clone)]
+#[derive(Zeroable, Pod)]
 #[repr(C, align(4))]
 pub struct Header {
-    pub compression_magic: FourCC,
+    pub ciphering_magic: FourCC,
     pub ciphered_size: u32,
     pub compressed_size: u32,
     pub raw_size: u32,
@@ -33,7 +33,7 @@ impl Header {
         let raw_size = cursor.read_u32::<LittleEndian>()?;
 
         Ok(Self {
-            compression_magic,
+            ciphering_magic: compression_magic,
             ciphered_size,
             compressed_size,
             raw_size,
@@ -55,19 +55,14 @@ impl Header {
     */
 
     pub fn object_size(&self) -> u32 {
-        if self.compressed_size > 0{
+        if self.compressed_size > 0 {
             if self.ciphered_size > 0 {
-                return (
-                    mem::size_of::<Self>() as u32 + mem::size_of::<FourCC>() as u32
-                        + self.ciphered_size
-                ) as u32
+                return std::mem::size_of::<Self>() as u32 + std::mem::size_of::<FourCC>() as u32
+                    + self.ciphered_size
             }
 
-            return (
-                mem::size_of::<Self>() as u32 + mem::size_of::<FourCC>() as u32
-                    + self.compressed_size
-            ) as u32
-
+            return std::mem::size_of::<Self>() as u32 + std::mem::size_of::<FourCC>() as u32
+                + self.compressed_size
         }
 
         self.raw_size
@@ -85,7 +80,7 @@ impl Header {
         }
 
         println!(
-            "Compression Magic (FourCC): {}", four_cc::to_string(&self.compression_magic)
+            "Compression Magic (FourCC): {}", four_cc::to_string(self.ciphering_magic)
         );
 
         println!("Encrypted Size (in Header): {}", &self.ciphered_size);

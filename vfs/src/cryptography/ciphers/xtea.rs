@@ -5,15 +5,18 @@ use std::mem;
 use crate::cryptography::ciphers::Cipher;
 
 // External Uses
-use anyhow::{bail, Result};
+use eyre::{bail, Result};
 use extended_tea::XTEA as ExtendedTEA;
 use byteorder::LE;
+use crate::formats::MCOZ_FOURCC;
 
 
+#[allow(clippy::upper_case_acronyms)]
 #[derive(Debug, Default)]
 pub struct XTEA {}
 
 impl Cipher for XTEA {
+    const FOURCC: u32 = *MCOZ_FOURCC;
     const NAME: &'static str = "XTEA";
 
     fn encrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
@@ -26,11 +29,18 @@ impl Cipher for XTEA {
         let concrete_key = bytemuck::from_bytes(&key);
 
         let cipher = ExtendedTEA::new(concrete_key);
+        let mut output = vec![0u8; data.len()];
 
-        let mut output = vec![0u8; data.len()].into_boxed_slice();
-        cipher.encipher_u8slice::<LE>(&data, &mut output);
+        if data.len() % 8 != 0 {
+            bail!(
+                "Could not cipher with XTEA: Input should be of length divisible by 8, \
+                 it's {} instead",
+                data.len() % 8
+            )
+        }
 
-        Ok(Vec::from(output))
+        cipher.encipher_u8slice::<LE>(data, &mut output);
+        Ok(output.to_vec())
     }
 
     fn decrypt(data: &[u8], key: Vec<u8>) -> Result<Vec<u8>> {
@@ -45,8 +55,8 @@ impl Cipher for XTEA {
         let cipher = ExtendedTEA::new(concrete_key);
 
         let mut output = vec![0u8; data.len()].into_boxed_slice();
-        cipher.decipher_u8slice::<LE>(&data, &mut output);
+        cipher.decipher_u8slice::<LE>(data, &mut output);
 
-        Ok(Vec::from(output))
+        Ok(output.to_vec())
     }
 }

@@ -17,7 +17,7 @@ use crate::vfs::handler::Handler;
 use crate::vfs::file::MemFile;
 
 // External Uses
-use anyhow::{Context, Result};
+use eyre::{Context, Result};
 
 
 #[allow(unused)]
@@ -36,7 +36,7 @@ impl Eter {
         self.handlers.push(handler);
     }
 
-    pub fn add_handler_inv(&mut self, handler: Box<Rc<dyn Handler>>) {
+    pub fn add_handler_inv(&mut self, handler: Rc<dyn Handler>) {
         todo!()
     }
 

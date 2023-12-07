@@ -7,7 +7,7 @@ use crate::utils::four_cc::FourCC;
 use crate::formats::protos::mob_proto::CHARACTER_NAME_LENGTH;
 
 // External Uses
-use anyhow::Result;
+use eyre::Result;
 use lazy_static::lazy_static;
 use bytemuck::AnyBitPattern;
 
